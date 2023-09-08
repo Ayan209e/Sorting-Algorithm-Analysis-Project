@@ -6,26 +6,41 @@
 // static long long inversions = 0;
 
 // Swap Function
-void swap(int *a, int *b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+void swap(int arr[],int i,int j) {
+    int temp = arr[i];
+    arr[i]=arr[j];
+    arr[j] = temp;
 }
 
 // Partition Function
-int partition(int arr[], int left, int right) {
-    int pivot = arr[right];
-    int i = (left - 1);
+int partition(int arr[],int s, int e){
 
-    for (int j = left; j <= right - 1; j++) {
-        if (arr[j] < pivot) {
-            i++;
-            swap(&arr[i], &arr[j]);
-            inversions++;
+        int pivot=arr[s];
+        int cnt=0;
+        for(int i=s+1;i<=e;i++){
+                if(arr[i]<pivot){
+                        cnt++;
+                }
         }
-    }
-    swap(&arr[i + 1], &arr[right]);
-    return (i + 1);
+
+        int pivotIndex = s+cnt;
+        swap(arr,pivotIndex,s);
+
+        int i=s;
+        int j=e;
+        while(i<pivotIndex && j>pivotIndex){
+                while(arr[i]<=pivot){
+                        i++;
+                }
+                while(arr[j]>pivot){
+                        j--;
+                }
+                if(i<pivotIndex && j>pivotIndex){
+                        swap(arr,i++,j--);
+                }
+        }
+        return pivotIndex;
+
 }
 
 // Quick Sort Function
